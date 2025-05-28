@@ -13,3 +13,6 @@
 # Crash log or debug info
 crash.log
 terraform.tfplan
+
+# Terraform plugin, modules, local state
+.terraform/
