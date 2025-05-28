@@ -6,9 +6,9 @@ module "google_compute_instance" {
   image = "ubuntu-os-cloud/ubuntu-2204-lts"
   disk_size = 30
   subnetwork = module.vpc.subnets_names[2]
-  ssh_key_path = "~/.ssh/id_rsa.pub"
+  ssh_key_path = var.ssh_key_path
   tags = ["allow-ssh-test", "allow-http-https-test"]
-  service_account_email = "340121241354-compute@developer.gserviceaccount.com"
+  service_account_email = var.service_account_email
 }
 
 module "nat" {
