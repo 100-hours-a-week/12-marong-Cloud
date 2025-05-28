@@ -13,3 +13,13 @@ variable "service_account_email" {
   description = "The service account email to use for the compute instances"
   type        = string
 }
+
+# variable "bucket_name" {
+#   description = "The name of the GCS bucket to use for the storage"
+#   type        = string
+# }
+
+# variable "backup_bucket_name" {
+#   description = "The name of the backup GCS bucket to use for the storage"
+#   type        = string
+# }
