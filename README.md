@@ -1,4 +1,5 @@
-![마롱이미지.png](/images/marrong.png)
+
+![marong](https://github.com/user-attachments/assets/a5025e5d-5c3e-4e91-94c3-e7afa4e6e0ca)
 
 # 1. Overview
 
