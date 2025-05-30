@@ -1,4 +1,4 @@
-variable "name" {
+variable "backend_name" {
     description = "The name of the instance"
     type = string
 }
@@ -8,8 +8,8 @@ variable "machine_type" {
     type = string
 }
 
-variable "zone" {
-    description = "The zone of the instance"
+variable "region" {
+    description = "The region of the instance"
     type = string
 }
 
@@ -42,4 +42,9 @@ variable "service_account_email" {
     description = "The email of the service account"
     type = string
     default = ""
+}
+
+variable "target_size" {
+    description = "The target size of the instance"
+    type = number
 }

@@ -1,7 +1,7 @@
-resource "google_compute_instance" "marong-vm" {
-  name = var.name
+resource "google_compute_instance" "db-vm" {
+  name = var.db_name
   machine_type = var.machine_type
-  zone = var.zone   
+  zone = var.zone
 
   boot_disk {
     initialize_params {
