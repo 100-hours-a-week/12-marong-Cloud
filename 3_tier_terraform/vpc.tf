@@ -3,7 +3,7 @@ module "vpc" {
   version = "11.1.0"
 
 /*
-    고정 IP 할당 받는 거 아직 안 함 해야 함
+    고정 IP 할당 받는 거 아직 안 함 꼭 하기
 */
   project_id = var.project_id
   network_name = "marong-vpc-network"
