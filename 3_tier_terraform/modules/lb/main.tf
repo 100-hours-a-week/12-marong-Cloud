@@ -20,7 +20,7 @@ resource "google_compute_backend_service" "backend-service" {
   load_balancing_scheme = "EXTERNAL"
 
   backend {
-    group = var.backend_group
+    group = "https://www.googleapis.com/compute/v1/projects/${var.project}/zones/${var.zone}/instanceGroups/${var.backend_group}"
   }
 }
 

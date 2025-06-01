@@ -32,6 +32,8 @@ module "lb" {
   url_map_name = "marong-url-map"
   http_proxy_name = "marong-http-proxy"
   http_forwarding_rule_name = "marong-http-forwarding-rule"
+  project = var.project_id
+  zone = "asia-northeast3-a"
 }
 
 module "nat" {

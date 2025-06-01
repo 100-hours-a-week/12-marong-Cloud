@@ -22,3 +22,13 @@ variable "http_forwarding_rule_name" {
   description = "The name of the http forwarding rule"
   type = string
 }
+
+variable "project" {
+  description = "The project ID"
+  type = string
+}
+
+variable "zone" {
+  description = "The zone"
+  type = string
+}
