@@ -23,12 +23,17 @@ variable "http_forwarding_rule_name" {
   type = string
 }
 
-variable "project" {
-  description = "The project ID"
+variable "project_id" {
+  description = "The project ID to deploy resources into"
   type = string
 }
 
 variable "zone" {
-  description = "The zone"
+  description = "The zone to deploy resources into"
+  type = string
+} 
+
+variable "security_policy" {
+  description = "The name of the security policy"
   type = string
 }

@@ -18,9 +18,10 @@ resource "google_compute_backend_service" "backend-service" {
   timeout_sec = 10
   health_checks = [google_compute_health_check.health-check.self_link]
   load_balancing_scheme = "EXTERNAL"
+  security_policy = var.security_policy
 
   backend {
-    group = "https://www.googleapis.com/compute/v1/projects/${var.project}/zones/${var.zone}/instanceGroups/${var.backend_group}"
+    group = "https://www.googleapis.com/compute/v1/projects/${var.project_id}/zones/${var.zone}/instanceGroups/${var.backend_group}"
   }
 }
 

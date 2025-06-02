@@ -32,7 +32,8 @@ module "lb" {
   url_map_name = "marong-url-map"
   http_proxy_name = "marong-http-proxy"
   http_forwarding_rule_name = "marong-http-forwarding-rule"
-  project = var.project_id
+  security_policy = module.cloud-armor.security_policy_name
+  project_id = var.project_id
   zone = "asia-northeast3-a"
 }
 
@@ -43,6 +44,13 @@ module "nat" {
   region = "asia-northeast3"
   private_subnets = [module.vpc.subnets_names[0], module.vpc.subnets_names[1]]
 
+}
+
+module "cloud-armor" {
+  source = "./modules/cloud-armor"
+  name = "marong-cloud-armor"
+  description = "Cloud Armor policy for marong"
+  allowed_ips = ["10.10.0.0/24"]
 }
 
 # module "gcs" {
