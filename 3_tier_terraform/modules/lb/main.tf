@@ -41,4 +41,12 @@ resource "google_compute_global_forwarding_rule" "http-forwarding-rule" {
   port_range = "80"
   load_balancing_scheme = "EXTERNAL"
   ip_protocol = "TCP"
+  ip_address = google_compute_global_address.lb-ip.address
+}
+
+resource "google_compute_global_address" "lb-ip" {
+  name = var.lb_name
+  project = var.project_id
+  address_type = "EXTERNAL"
+  ip_version = "IPV4"
 }

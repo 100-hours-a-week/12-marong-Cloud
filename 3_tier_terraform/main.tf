@@ -16,7 +16,7 @@ module "google_compute_instance_db" {
   source = "./modules/db-compute-engine"
   db_name = "marong-db-01-test"
   machine_type = "e2-micro"
-  zone = "asia-northeast3-a"
+  region = "asia-northeast3"
   image = "ubuntu-os-cloud/ubuntu-2204-lts"
   disk_size = 30  
   subnetwork = module.vpc.subnets_names[3]
@@ -34,7 +34,9 @@ module "lb" {
   http_forwarding_rule_name = "marong-http-forwarding-rule"
   security_policy = module.cloud-armor.security_policy_name
   project_id = var.project_id
-  zone = "asia-northeast3-a"
+  zone = "asia-northeast3-a"  
+  lb_name = "marong-lb-01"
+
 }
 
 module "nat" {
@@ -49,8 +51,7 @@ module "nat" {
 module "cloud-armor" {
   source = "./modules/cloud-armor"
   name = "marong-cloud-armor"
-  description = "Cloud Armor policy for marong"
-  allowed_ips = ["10.10.0.0/24"]
+  description = "Cloud Armor policy for marong" 
 }
 
 # module "gcs" {

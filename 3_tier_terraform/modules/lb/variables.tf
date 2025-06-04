@@ -37,3 +37,8 @@ variable "security_policy" {
   description = "The name of the security policy"
   type = string
 }
+
+variable "lb_name" {
+  description = "The name of the load balancer"
+  type = string
+}

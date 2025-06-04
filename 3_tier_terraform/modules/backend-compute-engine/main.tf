@@ -12,6 +12,7 @@ resource "google_compute_instance_template" "backend-vm" {
 
   network_interface {
     subnetwork = var.subnetwork
+    network_ip = google_compute_address.backend-ip.address
     access_config {}
   }
 
@@ -39,4 +40,11 @@ resource "google_compute_instance_group_manager" "backend-group" {
   }
 
   target_size = var.target_size
+}
+
+resource "google_compute_address" "backend-ip" {
+  name = var.backend_name
+  region = var.region
+  subnetwork = var.subnetwork
+  address_type = "INTERNAL"
 }

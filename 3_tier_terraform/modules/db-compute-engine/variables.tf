@@ -8,7 +8,7 @@ variable "machine_type" {
   type = string
 }
 
-variable "zone" {
+variable "region" {
   description = "The zone of the instance"
   type = string
 }
