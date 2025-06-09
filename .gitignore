@@ -1,0 +1,15 @@
+# Terraform 상태 파일 (민감 정보 포함)
+*.tfstate
+*.tfstate.backup
+
+# Terraform 변수 파일 (민감 정보가 있을 수 있음)
+*.tfvars
+*.tfvars.json
+
+# Terraform 디렉토리 (모듈 캐시, 플러그인, 백엔드 등)
+.terraform/
+.terraform.lock.hcl
+
+# Crash log or debug info
+crash.log
+terraform.tfplan
