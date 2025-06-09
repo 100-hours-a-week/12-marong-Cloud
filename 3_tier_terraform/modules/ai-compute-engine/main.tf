@@ -1,5 +1,5 @@
-resource "google_compute_instance" "db-vm" {
-  name = var.db_name
+resource "google_compute_instance" "ai-vm" {
+  name = var.ai_name
   machine_type = var.machine_type
   zone = "${var.region}-a"
 
@@ -12,7 +12,7 @@ resource "google_compute_instance" "db-vm" {
 
   network_interface {
     subnetwork = var.subnetwork
-    network_ip = google_compute_address.db-ip.address
+    network_ip = google_compute_address.ai-ip.address
     access_config {    }
   }
 
@@ -28,8 +28,8 @@ resource "google_compute_instance" "db-vm" {
   }
 }
 
-resource "google_compute_address" "db-ip" {
-  name = var.db_name
+resource "google_compute_address" "ai-ip" {
+  name = var.ai_name
   subnetwork = var.subnetwork
   region = var.region
   address_type = "INTERNAL"

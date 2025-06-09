@@ -21,7 +21,11 @@ resource "google_compute_backend_service" "backend-service" {
   security_policy = var.security_policy
 
   backend {
-    group = "https://www.googleapis.com/compute/v1/projects/${var.project_id}/zones/${var.zone}/instanceGroups/${var.backend_group}"
+    group = "https://www.googleapis.com/compute/v1/projects/${var.project_id}/zones/${var.zone}/instanceGroups/${var.backend_group_01}"
+  }
+
+  backend {
+    group = "https://www.googleapis.com/compute/v1/projects/${var.project_id}/zones/${var.zone}/instanceGroups/${var.backend_group_02}"
   }
 }
 

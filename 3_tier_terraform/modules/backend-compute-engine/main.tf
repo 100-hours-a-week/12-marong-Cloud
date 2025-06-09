@@ -1,5 +1,5 @@
 resource "google_compute_instance_template" "backend-vm" {
-  name = var.backend_name
+  name = "${var.backend_name}"
   machine_type = var.machine_type
   region = var.region
 
@@ -12,8 +12,6 @@ resource "google_compute_instance_template" "backend-vm" {
 
   network_interface {
     subnetwork = var.subnetwork
-    network_ip = google_compute_address.backend-ip.address
-    access_config {}
   }
 
   metadata = {
@@ -29,7 +27,7 @@ resource "google_compute_instance_template" "backend-vm" {
 }
 
 resource "google_compute_instance_group_manager" "backend-group" {
-  name = var.backend_name
+  name = "${var.backend_name}"
   base_instance_name = "backend"
   version {
     instance_template = google_compute_instance_template.backend-vm.self_link
@@ -40,11 +38,4 @@ resource "google_compute_instance_group_manager" "backend-group" {
   }
 
   target_size = var.target_size
-}
-
-resource "google_compute_address" "backend-ip" {
-  name = var.backend_name
-  region = var.region
-  subnetwork = var.subnetwork
-  address_type = "INTERNAL"
 }

@@ -3,8 +3,13 @@ variable "backend_name" {
   type = string
 }
 
-variable "backend_group" {
-  description = "The name of the backend group"
+variable "backend_group_01" {
+  description = "The name of the backend group 01"
+  type = string
+}
+
+variable "backend_group_02" {
+  description = "The name of the backend group 02"
   type = string
 }
 

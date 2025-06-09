@@ -1,7 +1,7 @@
-module "google_compute_instance" {
+module "google_compute_instance_01" {
   source = "./modules/backend-compute-engine"
   backend_name = "marong-public-vm-01-test"
-  machine_type = "e2-micro"
+  machine_type = "e2-standard-2"
   region = "asia-northeast3"
   image = "ubuntu-os-cloud/ubuntu-2204-lts"
   disk_size = 30
@@ -9,17 +9,45 @@ module "google_compute_instance" {
   ssh_key_path = var.ssh_key_path 
   tags = ["allow-ssh-test", "allow-http-https-test"]
   service_account_email = var.service_account_email
-  target_size = 2
+  target_size = 1
+}
+
+module "google_compute_instance_02" {
+  source = "./modules/backend-compute-engine"
+  backend_name = "marong-public-vm-02-test"
+  machine_type = "e2-standard-2"
+  region = "asia-northeast3"
+  image = "ubuntu-os-cloud/ubuntu-2204-lts"
+  disk_size = 30
+  subnetwork = module.vpc.subnets_names[3]
+  ssh_key_path = var.ssh_key_path
+  tags = ["allow-ssh-test", "allow-http-https-test"]
+  service_account_email = var.service_account_email
+  target_size = 1
 }
 
 module "google_compute_instance_db" {
   source = "./modules/db-compute-engine"
   db_name = "marong-db-01-test"
-  machine_type = "e2-micro"
+  machine_type = "e2-standard-2"
   region = "asia-northeast3"
   image = "ubuntu-os-cloud/ubuntu-2204-lts"
   disk_size = 30  
-  subnetwork = module.vpc.subnets_names[3]
+  subnetwork = module.vpc.subnets_names[4]
+  ssh_key_path = var.ssh_key_path
+  tags = ["allow-ssh-test", "allow-http-https-test"]
+  service_account_email = var.service_account_email
+}
+
+module "google_compute_instance_ai" {
+
+  source = "./modules/ai-compute-engine"
+  ai_name = "marong-ai-01-test"
+  machine_type = "e2-standard-2"
+  region = "asia-northeast3"
+  image = "ubuntu-os-cloud/ubuntu-2204-lts"
+  disk_size = 30
+  subnetwork = module.vpc.subnets_names[4]
   ssh_key_path = var.ssh_key_path
   tags = ["allow-ssh-test", "allow-http-https-test"]
   service_account_email = var.service_account_email
@@ -28,7 +56,8 @@ module "google_compute_instance_db" {
 module "lb" {
   source = "./modules/lb"
   backend_name = "marong-public-vm-01-test"
-  backend_group = module.google_compute_instance.instance_group_name
+  backend_group_01 = module.google_compute_instance_01.instance_group_name
+  backend_group_02 = module.google_compute_instance_02.instance_group_name
   url_map_name = "marong-url-map"
   http_proxy_name = "marong-http-proxy"
   http_forwarding_rule_name = "marong-http-forwarding-rule"
@@ -36,7 +65,6 @@ module "lb" {
   project_id = var.project_id
   zone = "asia-northeast3-a"  
   lb_name = "marong-lb-01"
-
 }
 
 module "nat" {
@@ -44,8 +72,7 @@ module "nat" {
   name = "marong-nat-gateway"
   network = module.vpc.network_name
   region = "asia-northeast3"
-  private_subnets = [module.vpc.subnets_names[0], module.vpc.subnets_names[1]]
-
+  private_subnets = [module.vpc.subnets_names[2], module.vpc.subnets_names[3]]
 }
 
 module "cloud-armor" {
