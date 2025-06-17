@@ -18,6 +18,7 @@ resource "google_compute_instance" "db-vm" {
 
   metadata = {
     ssh-keys = "ubuntu:${file(var.ssh_key_path)}"
+    # startup-script = file("${path.module}/startup-db.sh")
   }
 
   tags = var.tags

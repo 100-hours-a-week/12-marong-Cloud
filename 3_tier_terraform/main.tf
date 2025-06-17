@@ -1,3 +1,16 @@
+module "google_compute_instance_db" {
+  source = "./modules/db-compute-engine"
+  db_name = "marong-db-01-test"
+  machine_type = "e2-standard-2"
+  region = "asia-northeast3"
+  image = "ubuntu-os-cloud/ubuntu-2204-lts"
+  disk_size = 30  
+  subnetwork = module.vpc.subnets_names[4]
+  ssh_key_path = var.ssh_key_path
+  tags = ["allow-db-marong", "allow-ssh-marong", "allow-internal-marong"]
+  service_account_email = var.service_account_email
+}
+
 module "google_compute_instance_01" {
   source = "./modules/backend-compute-engine"
   backend_name = "marong-public-vm-01-test"
@@ -7,9 +20,10 @@ module "google_compute_instance_01" {
   disk_size = 30
   subnetwork = module.vpc.subnets_names[2]
   ssh_key_path = var.ssh_key_path 
-  tags = ["allow-ssh-test", "allow-http-https-test"]
+  tags = ["allow-ssh-marong", "allow-https-marong", "allow-be-marong", "allow-internal-marong"]
   service_account_email = var.service_account_email
-  target_size = 1 // 꼭 타겟 사이즈 1로 설정 (main에서 인스턴스 선언 2개 함 = 그룹이 2개)
+  target_size = 1
+  db_ip = module.google_compute_instance_db.db_ip
 }
 
 module "google_compute_instance_02" {
@@ -21,22 +35,10 @@ module "google_compute_instance_02" {
   disk_size = 30
   subnetwork = module.vpc.subnets_names[3]
   ssh_key_path = var.ssh_key_path
-  tags = ["allow-ssh-test", "allow-http-https-test"]
+  tags = ["allow-ssh-marong", "allow-https-marong", "allow-be-marong", "allow-internal-marong"]
   service_account_email = var.service_account_email
   target_size = 1
-}
-
-module "google_compute_instance_db" {
-  source = "./modules/db-compute-engine"
-  db_name = "marong-db-01-test"
-  machine_type = "e2-standard-2"
-  region = "asia-northeast3"
-  image = "ubuntu-os-cloud/ubuntu-2204-lts"
-  disk_size = 30  
-  subnetwork = module.vpc.subnets_names[4]
-  ssh_key_path = var.ssh_key_path
-  tags = ["allow-ssh-test", "allow-http-https-test"]
-  service_account_email = var.service_account_email
+  db_ip = module.google_compute_instance_db.db_ip
 }
 
 module "google_compute_instance_ai" {
@@ -49,7 +51,7 @@ module "google_compute_instance_ai" {
   disk_size = 30
   subnetwork = module.vpc.subnets_names[4]
   ssh_key_path = var.ssh_key_path
-  tags = ["allow-ssh-test", "allow-http-https-test"]
+  tags = ["allow-ssh-marong", "allow-https-marong", "allow-internal-marong"]
   service_account_email = var.service_account_email
 }
 

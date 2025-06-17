@@ -12,7 +12,7 @@ module "vpc" {
   // 포트번호 설정
   firewall_rules = [
     {
-      name = "allow-internal-test"
+      name = "allow-internal-marong"
       description = "Allow internal traffic"
       direction = "INGRESS"
       priority = 65534
@@ -32,7 +32,7 @@ module "vpc" {
       ]
     }, 
     {
-      name = "allow-ssh-test"
+      name = "allow-ssh-marong"
       description = "Allow SSH traffic"
       direction = "INGRESS"
       priority = 1000
@@ -43,10 +43,10 @@ module "vpc" {
           ports = ["22"]
         }
       ]
-      target_tags = ["allow-ssh-test"]
+      target_tags = ["allow-ssh-marong"]
     },
     {
-      name = "allow-https-test"
+      name = "allow-https-marong"
       description = "Allow HTTPS traffic"
       direction = "INGRESS"
       priority = 1000
@@ -57,10 +57,10 @@ module "vpc" {
           ports = ["443", "80"]
         }
       ]
-      target_tags = ["allow-https-test"]
+      target_tags = ["allow-https-marong"]
     },
     {
-      name = "allow-be-test"
+      name = "allow-be-marong"
       description = "Allow be traffic"
       direction = "INGRESS"
       priority = 1000
@@ -71,7 +71,22 @@ module "vpc" {
           ports = ["8080"]
         }
       ]
-      target_tags = ["allow-be-test"]
+      target_tags = ["allow-be-marong"]
+    },
+
+    {
+      name = "allow-db-marong"
+      description = "Allow db traffic"
+      direction = "INGRESS"
+      priority = 1000
+      ranges = ["0.0.0.0/0"]
+      allow = [
+        {
+          protocol = "tcp"
+          ports = ["3306"]
+        }
+      ]
+      target_tags = ["allow-db-marong"]
     }
   ]
 

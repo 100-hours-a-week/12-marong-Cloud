@@ -7,7 +7,9 @@ resource "google_compute_health_check" "health-check" {
   unhealthy_threshold = 2
 
   http_health_check {
-    port = 80
+    port = 8080
+    request_path = "/"
+    response = ""
   }
 }
 
@@ -22,10 +24,14 @@ resource "google_compute_backend_service" "backend-service" {
 
   backend {
     group = "https://www.googleapis.com/compute/v1/projects/${var.project_id}/zones/${var.zone}/instanceGroups/${var.backend_group_01}"
+    balancing_mode = "UTILIZATION"
+    capacity_scaler = 1.0
   }
 
   backend {
     group = "https://www.googleapis.com/compute/v1/projects/${var.project_id}/zones/${var.zone}/instanceGroups/${var.backend_group_02}"
+    balancing_mode = "UTILIZATION"
+    capacity_scaler = 1.0
   }
 }
 

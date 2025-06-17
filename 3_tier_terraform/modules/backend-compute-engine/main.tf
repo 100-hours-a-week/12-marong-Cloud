@@ -16,6 +16,9 @@ resource "google_compute_instance_template" "backend-vm" {
 
   metadata = {
     ssh-keys = "ubuntu:${file(var.ssh_key_path)}"
+    # startup-script = templatefile("${path.module}/startup-be.sh", {
+    #   db_ip = var.db_ip
+    # })
   }
 
   tags = var.tags
@@ -34,7 +37,14 @@ resource "google_compute_instance_group_manager" "backend-group" {
   }
   named_port {
     name = "http"
-    port = 80
+    port = 8080
+  }
+
+  update_policy {
+    type = "PROACTIVE"
+    minimal_action = "REPLACE"
+    replacement_method = "RECREATE"
+    max_unavailable_fixed = 1
   }
 
   target_size = var.target_size

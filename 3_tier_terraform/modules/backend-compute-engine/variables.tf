@@ -48,3 +48,8 @@ variable "target_size" {
     description = "The target size of the instance"
     type = number
 }
+
+variable "db_ip" {
+    description = "The IP address of the database instance"
+    type = string
+}
