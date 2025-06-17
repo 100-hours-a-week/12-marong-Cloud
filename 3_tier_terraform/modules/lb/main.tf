@@ -8,8 +8,8 @@ resource "google_compute_health_check" "health-check" {
 
   http_health_check {
     port = 8080
-    request_path = "/"
-    response = ""
+    request_path = "/" // 헬스체크 경로 설정
+    response = "" // 헬스체크 응답 설정 400번대 응답도 헬스체크 통과
   }
 }
 
