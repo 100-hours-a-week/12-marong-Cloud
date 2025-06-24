@@ -13,12 +13,12 @@ resource "google_compute_instance" "db-vm" {
   network_interface {
     subnetwork = var.subnetwork
     network_ip = google_compute_address.db-ip.address
-    access_config {    }
+    access_config { }
   }
 
   metadata = {
     ssh-keys = "ubuntu:${file(var.ssh_key_path)}"
-    # startup-script = file("${path.module}/startup-db.sh")
+    startup-script = file("${path.module}/startup-db.sh")
   }
 
   tags = var.tags

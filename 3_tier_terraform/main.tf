@@ -1,6 +1,6 @@
 module "google_compute_instance_db" {
   source = "./modules/db-compute-engine"
-  db_name = "marong-db-01-test"
+  db_name = "marong-db-01"
   machine_type = "e2-standard-2"
   region = "asia-northeast3"
   image = "ubuntu-os-cloud/ubuntu-2204-lts"
@@ -12,8 +12,10 @@ module "google_compute_instance_db" {
 }
 
 module "google_compute_instance_01" {
+  name = "a"
   source = "./modules/backend-compute-engine"
-  backend_name = "marong-public-vm-01-test"
+  zone = "asia-northeast3-a"
+  backend_name = "backend"
   machine_type = "e2-standard-2"
   region = "asia-northeast3"
   image = "ubuntu-os-cloud/ubuntu-2204-lts"
@@ -27,8 +29,10 @@ module "google_compute_instance_01" {
 }
 
 module "google_compute_instance_02" {
+  name = "c"
   source = "./modules/backend-compute-engine"
-  backend_name = "marong-public-vm-02-test"
+  backend_name = "backend"
+  zone = "asia-northeast3-c"
   machine_type = "e2-standard-2"
   region = "asia-northeast3"
   image = "ubuntu-os-cloud/ubuntu-2204-lts"
@@ -44,7 +48,7 @@ module "google_compute_instance_02" {
 module "google_compute_instance_ai" {
 
   source = "./modules/ai-compute-engine"
-  ai_name = "marong-ai-01-test"
+  ai_name = "marong-ai-01"
   machine_type = "e2-standard-2"
   region = "asia-northeast3"
   image = "ubuntu-os-cloud/ubuntu-2204-lts"
@@ -57,10 +61,10 @@ module "google_compute_instance_ai" {
 
 module "lb" {
   source = "./modules/lb"
-  backend_name = "marong-public-vm-01-test"
-  backend_group_01 = module.google_compute_instance_01.instance_group_name
-  backend_group_02 = module.google_compute_instance_02.instance_group_name
-  url_map_name = "marong-url-map"
+  backend_name = "backend"
+  backend_group_01 = module.google_compute_instance_01.instance_group_self_link
+  backend_group_02 = module.google_compute_instance_02.instance_group_self_link
+  url_map_name = "marong-load-balancer"
   http_proxy_name = "marong-http-proxy"
   http_forwarding_rule_name = "marong-http-forwarding-rule"
   security_policy = module.cloud-armor.security_policy_name
