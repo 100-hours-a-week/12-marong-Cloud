@@ -36,7 +36,7 @@ module "vpc" {
       description = "Allow SSH traffic"
       direction = "INGRESS"
       priority = 1000
-      ranges = ["0.0.0.0/0"]
+      ranges = ["35.235.240.0/20"]
       allow = [
         {
           protocol = "tcp"

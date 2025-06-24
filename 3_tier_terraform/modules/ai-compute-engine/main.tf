@@ -13,7 +13,7 @@ resource "google_compute_instance" "ai-vm" {
   network_interface {
     subnetwork = var.subnetwork
     network_ip = google_compute_address.ai-ip.address
-    access_config {    }
+    access_config { }
   }
 
   metadata = {

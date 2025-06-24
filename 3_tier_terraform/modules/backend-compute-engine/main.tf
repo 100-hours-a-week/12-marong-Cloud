@@ -1,13 +1,13 @@
-resource "google_compute_instance_template" "backend-vm" {
-  name = "${var.backend_name}"
+resource "google_compute_instance" "backend-vm" {
+  name = "${var.backend_name}-${var.name}"
   machine_type = var.machine_type
-  region = var.region
+  zone = var.zone
 
-  disk {
-    source_image = var.image
-    auto_delete = true
-    boot = true
-    disk_size_gb = var.disk_size
+  boot_disk {
+    initialize_params {
+      image = var.image
+      size = var.disk_size
+    }
   }
 
   network_interface {
@@ -16,9 +16,7 @@ resource "google_compute_instance_template" "backend-vm" {
 
   metadata = {
     ssh-keys = "ubuntu:${file(var.ssh_key_path)}"
-    # startup-script = templatefile("${path.module}/startup-be.sh", {
-    #   db_ip = var.db_ip
-    # })
+    startup-script = file("${path.module}/startup-be.sh")
   }
 
   tags = var.tags
@@ -29,23 +27,14 @@ resource "google_compute_instance_template" "backend-vm" {
   }
 }
 
-resource "google_compute_instance_group_manager" "backend-group" {
-  name = "${var.backend_name}"
-  base_instance_name = "backend"
-  version {
-    instance_template = google_compute_instance_template.backend-vm.self_link
-  }
+resource "google_compute_instance_group" "backend-group" {
+  name = "${var.backend_name}-${var.name}"
+  zone = var.zone
+  instances = [
+    google_compute_instance.backend-vm.self_link
+  ]
   named_port {
     name = "http"
     port = 8080
   }
-
-  update_policy {
-    type = "PROACTIVE"
-    minimal_action = "REPLACE"
-    replacement_method = "RECREATE"
-    max_unavailable_fixed = 1
-  }
-
-  target_size = var.target_size
 }

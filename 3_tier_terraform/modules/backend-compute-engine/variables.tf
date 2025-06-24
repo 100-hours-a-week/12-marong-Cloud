@@ -3,6 +3,15 @@ variable "backend_name" {
     type = string
 }
 
+variable "name" {
+    description = "The name of the instance"
+    type = string
+}
+
+variable "zone" {
+  description = "zone"
+  type = string
+}
 variable "machine_type" {
     description = "The machine type of the instance"
     type = string
