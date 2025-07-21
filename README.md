@@ -1,292 +1,36 @@
+# 🌰 마니또는 마롱으로, marong
 
-![marong](https://github.com/user-attachments/assets/a5025e5d-5c3e-4e91-94c3-e7afa4e6e0ca)
+<img width="800" height="799" alt="스크린샷 2025-07-18 오전 11 08 35" src="https://github.com/user-attachments/assets/9e9568b5-2630-44d8-b3af-9cb8647d4c31" />
 
-# 1. Overview
+👉🏻 [marong 바로가기](https://marong.co.kr/home) 
 
----
+## 집단 내 라포 형성과 초기 네트워킹 형성을 위한 마니또 SNS 💬
+특히, 대학OT, 직장 온보딩, 소규모 커뮤니티와 같은 초기 집단에서의 자연스러운 친밀감 형성을 도와주는 서비스예요 👥
 
-- 프로젝트 이름 : Marrong
-- 프로젝트 설명 : 마니또 기반 SNS 서비스
+## 📌 ONLY 마롱에서
+> 단순한 마니또, 단순한 소모임 SNS와는 달리
+> **마니또 SNS** 로 이어지는 마롱!
 
-# 2. Members
-
----
-
-| Noah(문현민) | Trent(곽용우) |
-| --- | --- |
-| 이미지  | 이미지 |
-| Cloud | Cloud |
-| [Github](https://github.com/moonhyeonmin) | [Github](https://github.com/kwakyongwoo) |
-
-# 3. Task & Responsibilities
+- 단발성 이벤트가 아닌, **주기적인 라포 형성 루틴**
+- **온·오프라인 병행 미션**으로 내향적인 사람도 부담 없이 참여 가능  
+- 미션 수행 → 게시물 공유 로 이어지는 **SNS 구조**
+- **AI 추천 장소 기반** 으로 마니또&마니띠의 라포 형성 극대화
 
 ---
-
-|  |  |  |
-| --- | --- | --- |
-| Noah | 프사 11| Cloud 배포 및 관리, CI/CD  관리 |
-| Trent | 프사 | Cloud 배포 및 관리, CI/CD  관리 |
-
-# 4. Cloud Architecture
-
----
-
-### ☁️ V1
-
----
-
-![스크린샷 2025-03-17 오전 9.14.56.png](/images/V1.png)
-
-- AWS EC2 빅뱅 배포
-    - EC2 사용 스펙 : 어쩌구
-- JAR, VITE로 아카이빙하여 배포
-    - 어쩌구
-
-### ☁️ V2
-
----
-
-![image.png](/images/2.png)
-
-- Google Cloud Platform(GCP)를 사용한 3-Tier 배포
-    - 스펙 1
-    - 스펙 2
-- Shared, Dev, Prod 서버 구분
-    - Shared
-        - 외부와의 통신을 위한 Bastion 서버
-        - OpenVPN
-    - Dev
-        - 개발자가 코드를 자유롭게 변경하고 실험할 수 있는 환경
-        - 개발 중인 기능에 대한 초기 테스트
-        - 실제 사용자 데이터 대신 테스트 데이터 사용
-    - Prod
-        - 실제 사용자에게 서비스를 제공하는 환경
-        - 실제 사용자 데이터를 처리하고 저장
-        - 변경사항은 Dev에서의 철저한 테스트와 검증 과정을 거친 후 적용
-        - 소프트웨어의 최종 버전 배포
-
-### ☁️ V3
-
----
-
-![image.png](/images/3.png)
-
-- MSA 구조 배포
-    - AWS EKS 사용
-    - Pod 1
-    - Pod 2
-
-# 5. Tools
-
----
-
-### 5.1 Release
-
----
-
-| | |
-| --- | --- |
-| AWS | ![](/images/aws.png) |
-| GCP | ![](/images/gcp.png) |
-| Terraform | ![](/images/terraform.png) |
-
-### 5.2 CI/CD
-
----
-
-|  | |
-| --- | --- |
-| Github Actions | ![](/images/gitHubactions.png) |
-| CodeDeploy | ![](/images/codedeploy.png) |
-| ArgoCD | ![](/images/ArgoCD.png) |
-
-### 5.3 Cooperation
-
----
-
-| | |
-| --- | --- |
-| Git | ![](/images/git.png) |
-| Figjam | ![](/images/figma.png) |
-
-# 6. Project Structure
-
----
-
-```bash
-project/
-├── modules/                # 재사용 가능한 Terraform 모듈
-│   ├── vpc/
-│   ├── ec2/
-│   ├── rds/
-│   └── s3/
-├── dev/                    # 개발 환경 인프라 설정
-│   └── main.tf
-├── prod/                   # 운영 환경 인프라 설정
-│   └── main.tf
-├── terraform.tfvars        # 변수 정의
-└── README.md
-```
-
-# 7. Development Workflow
-
----
-
-### Branch Strategy
-
----
-
-<aside>
-📌
-
-Git-Flow를 기반으로 진행하며, 다음과 같은 브랜치를 사용함
-
-</aside>
-
-![image.png](/images/gitflow.png)
-
-- **main**
-    - 배포 가능한 상태의 코드를 유지
-    - 모든 배포는 `main`에서 이루어짐
-- **develop**
-    - 다음 출시 버전을 대비하여 개발
-- **feature**
-    - 추가 기능 개발
-    - `develop`에서 분기
-- **release**
-    - 다음 버전을 준비
-    - `develop` → `release` 로 옮긴 후 QA, 테스트 진행 완료 시 `main`으로 merge
-- **hotfix**
-    - `main`에서 발생한 버그를 수정
-
-# 8. Coding Convetion
-
----
-
-### 명명 규칙
-
----
-
-- 상수 : 영문 대문자 + snake_case
-
-```jsx
-const NAME_ROLE;
-```
-
-- 변수 & 함수 : camelCase
-
-```jsx
-// state
-const [isLoading, setIsLoading] = useState(false);
-const [isLoggedIn, setIsLoggedIn] = useState(false);
-const [errorMessage, setErrorMessage] = useState('');
-const [currentUser, setCurrentUser] = useState(null);
-
-// 배열 - 복수형 이름 사용
-const datas = [];
-
-// 정규표현식: 'r'로 시작
-const = rName = /.*/;
-
-// 이벤트 핸들러: 'on'으로 시작
-const onClick = () => {};
-const onChange = () => {};
-
-// 반환 값이 불린인 경우: 'is'로 시작
-const isLoading = false;
-
-// Fetch함수: method(get, post, put, del)로 시작
-const getEnginList = () => {...}
-```
-
-### 블록 구문
-
----
-
-```jsx
-// 한 줄짜리 블록일 경우라도 {}를 생략하지 않고, 명확히 줄 바꿈 하여 사용한다
-// good
-if(true){
-  return 'hello'
-}
-
-// bad
-if(true) return 'hello'
-```
-
-### 폴더, 파일 네이밍
-
----
-
-kebab-case를 기본으로 함
-
-```bash
-// kebab-case
-noah-good
-```
-
-# 9. Commit Convention
-
----
-
-### 기본 구조
-
----
-
-```bash
-type : subject (#Issue Number)
-- 상세 내용
-```
-
-### type
-
----
-
-```bash
-feat : 새로운 기능 추가
-fix : 버그 수정
-docs : 문서 수정
-style : 코드 포맷팅, 세미콜론 누락, 코드 변경이 없는 경우
-design : 사용자 UI 디자인 변경 (CSS 등)
-refactor : 코드 리팩토링
-test : 테스트 코드, 리펙토링 테스트 코드 추가
-build : 빌드 파일 수정
-ci : CI 설정 파일 수정
-perf : 성능 개선
-chore : 빌드 업무 수정, 패키지 매니저 수정
-rename : 파일 혹은 폴더명을 수정만 한 경우
-remove : 파일을 삭제만 한 경우
-```
-
-### commit example
-
----
-
-```bash
-feat: 회원 가입 기능 구현(#1)
-- 카카오 O-Auth 로그인 구현
-```
-
-# 10. Issue Convetion
-
----
-
-```markdown
----
-name: Feature request
-about: 구현할 기능을 이슈에 등록
-title: "[TAG] 이슈의 제목을 입력"
-labes: "
-assignees: "
-
----
-
-## 🚀 구현 기능
-
-## ✅ 상세 작업
-- [] To-do 1
-- [] To-do 2
-- [] To-do 3
-
-## 📄 참고 사항
-```
+## ✅ 주요 기능
+> 매주 다른 사람의 마니또가 되어 몰래 미션 수행하고 인증하기
+
+<img width="800" height="801" alt="스크린샷 2025-07-18 오전 11 09 34" src="https://github.com/user-attachments/assets/ea9a70c5-4b4d-4368-8a14-34c0e378069a" />
+<img width="800" height="804" alt="스크린샷 2025-07-18 오전 11 10 14" src="https://github.com/user-attachments/assets/52b48252-9023-40f3-8e53-8d27607d21bf" />
+<img width="800" height="797" alt="스크린샷 2025-07-18 오전 11 10 52" src="https://github.com/user-attachments/assets/7090bd41-9855-417d-a0fc-f733ef90602e" />
+
+## 🛠️ Tech Stack
+<img src="https://skillicons.dev/icons?i=gcp,aws,docker,githubactions,jenkins,terraform&theme=dark" />
+
+
+## 🎉 Contributors
+| Jay(장우준) | Trent(곽용우) | Noah(문현민) | Rosy(장서연) | Aiden(김충구) | Joy(윤지원) |
+|--------------|---------------|---------------|---------------|---------------|---------------|
+| 이미지        | 이미지         |  <img width="150" height="150" alt="스크린샷 2025-07-17 오후 5 25 05" src="https://github.com/user-attachments/assets/75a8a95c-d739-4ed6-8caf-f983e277f71c" />   | 이미지         | <img width="150" height="150" alt="스크린샷 2025-07-17 오후 5 25 52" src="https://github.com/user-attachments/assets/e6880a6c-12d4-44f0-9955-0df2a32ccc3a" />|  <img width="150" height="150" alt="스크린샷 2025-07-17 오후 5 22 45" src="https://github.com/user-attachments/assets/d33c3ae5-4d1d-4df9-81bc-6b73109e2157" />|
+| AI        | Cloud, Frontend        |Cloud         |Backend         |AI         |AI         |
+| [Github](https://github.com/dbwbsb) | [Github](https://github.com/kwakyongwoo)  |[Github](https://github.com/moonhyeonmin)  |[Github](링크)  |[Github](https://github.com/CcGKIM)  |[Github](https://github.com/kkuriyoon)  |
